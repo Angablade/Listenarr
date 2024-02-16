@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  php-apache:
+    build:
+      context: .
+      dockerfile: Listenarr
+    ports:
+      - "80:80"
+    volumes:
+      - ./php-scripts:/var/www/html
+    environment:
+      - JELLYFIN_BASE_URL=
+      - JELLYFIN_API_KEY=
+      - LIDARR_API_URL=
+      - LIDARR_API_KEY=
+      - LIDARR_ROOT_FOLDER=
+      - LIDARR_QUALITY=1
+      - LIDARR_METADATA=1
+      - ENABLE_DISCORD_HOOK=FALSE
+      - DISCORD_WEBHOOK=
+      - DISCORD_ICON=
+      - DISCORD_URL=
+    command: /bin/bash -c "php /var/www/html/generate_creds.php && apache2-foreground"
